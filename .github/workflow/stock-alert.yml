@@ -1,0 +1,33 @@
+name: Stock Alert
+
+on:
+  schedule:
+    # Monday-Friday at 9:30 AM IST (4:00 UTC)
+    - cron: '0 4 * * 1-5'
+
+  workflow_dispatch:
+
+jobs:
+  stock-alert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          pip install yfinance requests python-dotenv
+
+      - name: Run Stock Bot
+        env:
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
+          PHONE_NUMBER_ID: ${{ secrets.PHONE_NUMBER_ID }}
+          RECIPIENT: ${{ secrets.RECIPIENT }}
+        run: python main.py
