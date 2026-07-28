@@ -2,7 +2,7 @@ name: Stock Alert
 
 on:
   schedule:
-    # Monday-Friday at 9:30 AM IST (4:00 UTC)
+    # Auto schedule updated
     - cron: '0 4 * * 1-5'
 
   workflow_dispatch:
